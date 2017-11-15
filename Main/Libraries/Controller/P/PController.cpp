@@ -1,5 +1,5 @@
 /*
-  PController.h - Library to model a P Controller with Hysteresis
+  PController.h - Library to model a P Controller
   Created by fgg, November 15, 2017.
   Released into the public domain.
 */
