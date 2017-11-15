@@ -11,7 +11,7 @@
 class  Controller{
   public:
     Controller();
-    void setLowPassButterworthFilterCutoffFrequency(float cutoffFrequency);
+    void setParametersAccordingToControllerInfo(float cutoffFrequency);
   private:
     float controlSignal;
 };
