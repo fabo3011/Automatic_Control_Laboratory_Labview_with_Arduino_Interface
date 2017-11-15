@@ -84,17 +84,7 @@ float a,b,c;
 // Fuzzy controller
 float uant;
 int mf,rect;
-//Struct Declaration
-//Point Structure
-typedef struct Point Point;
-struct Point{
-    float x, y;
-};
-//Line Equation Structure
-typedef struct Line Line;
-struct Line{
-    float a, b, c;
-};
+
 
 //Function to Check Counter Clock Wise Turn using cross product
 float ccw(const struct Point* a, const struct Point* b, const struct Point* c){

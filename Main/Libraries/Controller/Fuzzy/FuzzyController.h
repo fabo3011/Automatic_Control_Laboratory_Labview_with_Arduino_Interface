@@ -10,11 +10,25 @@
 #include "../../LabviewDataHandler/LabviewDataHandler.h"
 #include "../../ADCDataHandler/ADCDataHandler.h"
 
+//Struct Declaration
+//Point Structure
+typedef struct Point Point;
+struct Point{
+    float x, y;
+};
+//Line Equation Structure
+typedef struct Line Line;
+struct Line{
+    float a, b, c;
+};
+
 class  FuzzyController{
   public:
     FuzzyController();
     float fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK);
   private:
+    void  Polygon_Conv(int* poly_size, int poly1, int poly2);
+    void  Polygon(int* poly_size, int poly0);
     void  Fuzzify_and_Polyline(ControllerInfo *controllerInfo, float *currentEK);
     float controlSignal;
     // Differential in the control signal obtained by the defuzzifier
