@@ -47,7 +47,8 @@ int LabviewDataHandler::getIncomingFrameFromLabview(ControllerInfo *controllerIn
           // Read Reference
           controllerInfo->reference = Serial.parseFloat();
           incomingByte = Serial.read();
-
+          //TEMPORAL direct assign of the samplingPeriod variable
+          controllerInfo->samplingPeriodInSeconds = 0.13;
           // Read controller configs
           switch((int)controllerInfo->controllerType){
             case 2:     // On/Off Hyst

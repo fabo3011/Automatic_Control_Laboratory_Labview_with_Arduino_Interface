@@ -13,6 +13,7 @@
 typedef struct ControllerInfo ControllerInfo;
 struct ControllerInfo{
     float reference;
+    float samplingPeriodInSeconds;
     float controllerType;
     float hysteresisPercentage;
     float kp;
