@@ -11,6 +11,22 @@ FuzzyController::FuzzyController(){
     eps = 1e-6;
 }
 
+// Function to Check Counter Clock Wise Turn using cross product
+float FuzzyController::ccw(const struct Point* a, const struct Point* b, const struct Point* c){
+    return (c->y-a->y)*(b->x-a->x) > (b->y-a->y)*(c->x-a->x);
+}
+// Function that uses CCW function to test wether 2 line segments intersect (AB with CD)
+int FuzzyController::intersect(const struct Point* a, const struct Point* b, const struct Point* c, const struct Point* d){
+    return ((ccw(a,c,d)!=ccw(b,c,d))&&(ccw(a,b,c)!=ccw(a,b,d)));
+}
+// Intersection of 2 rects given a,b,c for one line and e,d,f for other line
+struct Point FuzzyController::intersection(const Line* l1, const Line* l2){
+    struct Point tmp;
+    float det = -1/(l1->a*l2->b-l1->b*l2->a);
+    tmp.x = det*(l1->c*l2->b-l1->b*l2->c);
+    tmp.y = det*(l2->c*l1->a-l1->c*l2->a);
+    return tmp;
+}
 // Calculates the combined points of 2 mf that intersect each other
 void FuzzyController::Polygon_Conv(int* poly_size, int poly1, int poly2){
     *poly_size = 0;
@@ -123,10 +139,39 @@ void  FuzzyController::Fuzzify_and_Polyline(ControllerInfo *ctrlInfo, float *cur
         }
     }
 }
-
+// Defuzzify by Singleton
+float FuzzyController::Singleton_Def(){
+   // Singleton Method
+   float singleton = 0;
+   float sumy = 0;
+   for(int i = 0; i < idx-1; ++i){
+       singleton += poly[i].x*poly[i].y;
+       sumy += poly[i].y;
+   }
+   return singleton/sumy;
+}
+// Defuzzify by Center of Area
+float FuzzyController::CoA_Def(){
+    //Center of Area
+    //variables for area and centroid
+    int i;
+    float area;
+    float centroid;
+    area = centroid = 0;
+    for(i = 0; i < idx-1; ++i){
+        area += poly[i].x*poly[i+1].y-poly[i+1].x*poly[i].y;
+        centroid += (poly[i].x*poly[i+1].y-poly[i+1].x*poly[i].y)*(poly[i].x+poly[i+1].x);
+    }
+    area /= 2.;
+    centroid /= 6*area;
+    //printf("area: %.6f\n",area);
+    //printf("centroid: %.6f\n",centroid);
+    return centroid/area;
+}
+// Get Response for the Fuzzy Controller
 float FuzzyController::fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK){
     
-    Fuzzify_and_Polyline(currentEK);
+    Fuzzify_and_Polyline(controllerInfo, currentEK);
     dU = Singleton_Def();
     controlSignal = adcInfo->uKFromADC + dU;
     controlSignal = max(controlSignal,0.0);  // Lower Saturation Limit

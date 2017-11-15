@@ -27,9 +27,15 @@ class  FuzzyController{
     FuzzyController();
     float fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK);
   private:
-    void  Polygon_Conv(int* poly_size, int poly1, int poly2);
-    void  Polygon(int* poly_size, int poly0);
-    void  Fuzzify_and_Polyline(ControllerInfo *controllerInfo, float *currentEK);
+    float  ccw(const struct Point* a, const struct Point* b, const struct Point* c);
+    int    intersect(const struct Point* a, const struct Point* b, const struct Point* c, const struct Point* d);
+    struct Point intersection(const Line* l1, const Line* l2);
+    void   Polygon_Conv(int* poly_size, int poly1, int poly2);
+    void   Polygon(int* poly_size, int poly0);
+    void   Fuzzify_and_Polyline(ControllerInfo *controllerInfo, float *currentEK);
+    float  Singleton_Def();
+    float  CoA_Def();
+    // --- Auxiliary Private Variables --- //
     float controlSignal;
     // Differential in the control signal obtained by the defuzzifier
     float dU;
