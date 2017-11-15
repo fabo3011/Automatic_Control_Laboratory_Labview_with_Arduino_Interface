@@ -1,4 +1,6 @@
 #include <Filters.h>
+#include "Libraries/LabviewDataHandler/LabviewDataHandler.h"
+#include "Libraries/LabviewDataHandler/LabviewDataHandler.cpp"
 #include <string.h>
 #include <math.h>
 #define Y_SIGNAL A0
@@ -328,24 +330,17 @@ float CoA_Def(){
     return centroid/area;
 }
 
-
-
+// Controller Information Structure to store data recieved by the Labview Interface
+ControllerInfo controllerInfo;
+// Labview Data Handler Object to manage the information recieved through the serial port by the Labview Interface
+LabviewDataHandler labviewDataHandler;
 
 void setup() {
-  /*//P values for WA
-  P[0] = 0.2*5;
-  P[1] = 0.5*5;
-  P[2] = 0.8*5;
-
-  //temporal values for fuzzy
-  inp[0] = -0.25;
-  inp[1] = 0;
-  inp[2] = 0;
-  inp[3] = 0;
-  inp[4] = 0.25;*/
-  uant = 0;
+  
   // Initialize serial communication with custom baudrate
-  Serial.begin(921600);
+  labviewDataHandler.setBaudRate(921600);
+  
+  uant = 0;
   // Set filter pin as output (PWM)
   pinMode(pwm_pin,OUTPUT); 
   // Configure filter type for input signal
@@ -385,27 +380,7 @@ void loop() {
   // Set sample_signal as high (used to obtain period)
   digitalWrite(SAMPLE_SIGNAL,HIGH);
   
-  // -- Serial communication --
-  // Example frames: 
-  /*
-   *    OnOff Ref 15                :  #1,15,
-   *    OnOff Ref 10                :  #1,10,
-   *    Hyste R: 10, W: 50          :  #2,10,50,
-   *    Hyste R: 10, W: 10          :  #2,10,10,
-   *    P     R: 10, kP:5           :  #3,10,5,
-   *    P     R: 15, kP:8           :  #3,15,8,
-   *    PI R: 15, kP:0.5, Ki: 3.3   :  #4,15,0.5,3.3,
-   */
-   
-  /*
-   * 1. If data is available at serial port, read
-   * 2. If byte read is the header (#), read in order:
-   *        Controller
-   *        Reference
-   *        Window  / Kp  
-   *        Ki
-   *        ...(Fuzzy)...
-   */
+
 /*
   if(millis()>5000){
     
@@ -414,6 +389,7 @@ void loop() {
     //tmpRef = (tmpRef+1.0322)/4.5583;
     ref = tmpRef;
   }*/
+  /*
   if(Serial.available() > 0){
     data_H =Serial.read();
     // If header found
@@ -457,6 +433,9 @@ void loop() {
       ref = tmpRef;
      }
   }
+*/
+
+  int frameRecieved = labviewDataHandler.getIncomingFrameFromLabview( &controllerInfo );
 
   // Read convert and filter output signal
   y_k = analogRead(Y_SIGNAL)*5.0/1024.0;
