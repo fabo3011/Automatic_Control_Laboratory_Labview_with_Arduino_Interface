@@ -7,12 +7,16 @@
 #define Controller_h
 
 #include "Arduino.h"
+#include "LabviewDataHandler.h"
+#include "ADCDataHandler.h"
 
 class  Controller{
   public:
     Controller();
-    void setParametersAccordingToControllerInfo(float cutoffFrequency);
+    float obtainControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
   private:
     float controlSignal;
+    float previousUK;
+    float previousEK;
 };
 #endif
