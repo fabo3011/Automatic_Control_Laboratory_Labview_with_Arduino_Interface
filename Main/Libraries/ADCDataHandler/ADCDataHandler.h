@@ -8,7 +8,6 @@
 
 #include "Arduino.h"
 #include "Filters.h"
-#include "string.h"
 
 //Struct Declaration
 //ADC Information Structure to Store Data Recieved by the Analog to Digital Converters which contain uK and yK as inputs
