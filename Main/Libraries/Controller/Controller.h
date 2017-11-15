@@ -13,9 +13,10 @@
 class  Controller{
   public:
     Controller();
-    float obtainControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
+    void calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
   private:
     float controlSignal;
+    float currentEK;
     float previousUK;
     float previousEK;
 };
