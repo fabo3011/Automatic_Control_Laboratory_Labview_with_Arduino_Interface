@@ -21,7 +21,7 @@ class  Controller{
     float previousUK;
     float previousEK;
     OnOffController onOffController;
-    //PController     pController;
+    PController     pController;
     //PIController    pIController;
     //FuzzyController fuzzyController;
 };

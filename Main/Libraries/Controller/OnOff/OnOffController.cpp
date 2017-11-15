@@ -7,7 +7,6 @@
 #include "Arduino.h"
 #include "OnOffController.h"
 #include "../LabviewDataHandler/LabviewDataHandler.h"
-#include "../ADCDataHandler/ADCDataHandler.h"
 
 OnOffController::OnOffController(){}
 

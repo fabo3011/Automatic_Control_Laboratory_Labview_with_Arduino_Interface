@@ -8,7 +8,6 @@
 
 #include "Arduino.h"
 #include "../../LabviewDataHandler/LabviewDataHandler.h"
-#include "../../ADCDataHandler/ADCDataHandler.h"
 
 class  OnOffController{
   public:

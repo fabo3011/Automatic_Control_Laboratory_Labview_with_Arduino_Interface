@@ -22,7 +22,7 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
           controlSignal = onOffController.onOffControllerResponse(controllerInfo, &currentEK);
           break;
         case 3:      // P Controller
-          //controllerInfo->kp = Serial.parseFloat();
+          controlSignal = pController.pControllerResponse(controllerInfo, &currentEK);
           break;
         case 4:     // PI Controller
           //controllerInfo->kp = Serial.parseFloat();
