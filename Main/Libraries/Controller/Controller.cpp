@@ -8,6 +8,7 @@
 #include "Controller.h"
 #include "../LabviewDataHandler/LabviewDataHandler.h"
 #include "../ADCDataHandler/ADCDataHandler.h"
+#include "OnOff/OnOffController.h"
 
 Controller::Controller(){
     previousUK = 0.0;
@@ -18,7 +19,7 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
     currentEK = controllerInfo->reference-adcInfo->yKFromADC;
     switch((int)controllerInfo->controllerType){
         case 2:     // On/Off Hyst
-          controlSignal = onOffController.onOffControllerResponse(controllerInfo, adcInfo, &currentEK);
+          controlSignal = onOffController.onOffControllerResponse(controllerInfo, &currentEK);
           break;
         case 3:      // P Controller
           //controllerInfo->kp = Serial.parseFloat();

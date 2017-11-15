@@ -9,6 +9,7 @@
 #include "Arduino.h"
 #include "../LabviewDataHandler/LabviewDataHandler.h"
 #include "../ADCDataHandler/ADCDataHandler.h"
+#include "OnOff/OnOffController.h"
 
 class  Controller{
   public:
@@ -20,8 +21,8 @@ class  Controller{
     float previousUK;
     float previousEK;
     OnOffController onOffController;
-    PController     pController;
-    PIController    pIController;
-    FuzzyController fuzzyController;
+    //PController     pController;
+    //PIController    pIController;
+    //FuzzyController fuzzyController;
 };
 #endif
