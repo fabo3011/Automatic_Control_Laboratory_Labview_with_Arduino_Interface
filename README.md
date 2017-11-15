@@ -6,4 +6,4 @@ This Interface is for the Automatic Control Laboratory class at Instituto Tecnol
 
 # Libraries needed for the Arduino Program
 
-- The library "Filters.h" is required for the program to compile. It can be found at: https://github.com/JonHub/Filters (A realtime digital signal processing DSP library for Arduino)
+- The library "Filters.h" is required for the program to run. It can be found at: https://github.com/JonHub/Filters (A realtime digital signal processing DSP library for Arduino)
