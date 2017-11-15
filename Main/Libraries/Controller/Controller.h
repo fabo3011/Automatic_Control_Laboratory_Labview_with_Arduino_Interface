@@ -7,8 +7,8 @@
 #define Controller_h
 
 #include "Arduino.h"
-#include "LabviewDataHandler.h"
-#include "ADCDataHandler.h"
+#include "../LabviewDataHandler/LabviewDataHandler.h"
+#include "../ADCDataHandler/ADCDataHandler.h"
 
 class  Controller{
   public:

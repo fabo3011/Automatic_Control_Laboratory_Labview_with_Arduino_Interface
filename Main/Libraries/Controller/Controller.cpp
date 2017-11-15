@@ -6,8 +6,8 @@
 
 #include "Arduino.h"
 #include "Controller.h"
-#include "LabviewDataHandler.h"
-#include "ADCDataHandler.h"
+#include "../LabviewDataHandler/LabviewDataHandler.h"
+#include "../ADCDataHandler/ADCDataHandler.h"
 
 Controller::Controller(){
     previousUK = 0.0;
