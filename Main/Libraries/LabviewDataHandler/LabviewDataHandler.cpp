@@ -66,14 +66,20 @@ int LabviewDataHandler::getIncomingFrameFromLabview(ControllerInfo *controllerIn
             case 6:     // Open loop
               break;
           }
-          
-          // Convert reference to 5v logic
-          //tmpRef = dataBuff[0];
-         // tmpRef = (tmpRef+1.0322)/4.5583;
-          //ref = tmpRef;
          }
          return 1;
       }
     return 0;
 }
 
+void LabviewDataHandler::setReferenceLinearityRegionTo5V(ControllerInfo *controllerInfo, float m, float b, float setToZeroThreshold){
+    //Set reference to 0 with values below setToZeroThreshold
+    if(controllerInfo->reference < setToZeroThreshold){
+        controllerInfo->reference = 0;
+        return;
+    }
+    // Convert reference to 5v logic
+    controllerInfo->reference = (controllerInfo->reference-b)/m;  
+    // Take the maximum between the reference and 5V
+    controllerInfo->reference = max(5.0,controllerInfo->reference);
+}

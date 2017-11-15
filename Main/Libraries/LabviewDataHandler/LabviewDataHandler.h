@@ -29,6 +29,7 @@ class LabviewDataHandler
     LabviewDataHandler();
     void setBaudRate(unsigned long baud);
     int  getIncomingFrameFromLabview(ControllerInfo *controllerInfo);
+    void setReferenceLinearityRegionTo5V(ControllerInfo *controllerInfo, float m, float b, float setToZeroThreshold);
   private:
     char incomingByte;
 };

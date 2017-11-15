@@ -436,6 +436,11 @@ void loop() {
 */
 
   int frameRecieved = labviewDataHandler.getIncomingFrameFromLabview( &controllerInfo );
+  if(frameRecieved){
+      labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
+    
+    
+  }
 
   // Read convert and filter output signal
   y_k = analogRead(Y_SIGNAL)*5.0/1024.0;
