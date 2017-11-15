@@ -4,6 +4,14 @@
 #include "Libraries/ADCDataHandler/ADCDataHandler.cpp"
 #include "Libraries/Controller/Controller.h"
 #include "Libraries/Controller/Controller.cpp"
+#include "Libraries/Controller/OnOff/OnOffController.h"
+#include "Libraries/Controller/OnOff/OnOffController.cpp"
+#include "Libraries/Controller/P/PController.h"
+#include "Libraries/Controller/P/PController.cpp"
+#include "Libraries/Controller/PI/PIController.h"
+#include "Libraries/Controller/PI/PIController.cpp"
+#include "Libraries/Controller/Fuzzy/FuzzyController.h"
+#include "Libraries/Controller/Fuzzy/FuzzyController.cpp"
 
 #include <string.h>
 #include <math.h>
@@ -335,6 +343,9 @@ ADCInfo adcInfo;
 // ADC Data Handler Object to manage the information recieved through the ADC converters which contain uK and yK as inputs
 ADCDataHandler adcDataHandler = ADCDataHandler(1,0);
 
+// Controller
+Controller controller;
+
 void setup() {
   
   // Initialize serial communication with custom baudrate
@@ -401,7 +412,7 @@ void loop() {
   adcDataHandler.readYKFromADC( &adcInfo );
   adcDataHandler.filterYK( &adcInfo );
 
-  
+  controller.calculateControlSignalResponse( &controllerInfo, &adcInfo );
 
   
   // Execute the selected controller

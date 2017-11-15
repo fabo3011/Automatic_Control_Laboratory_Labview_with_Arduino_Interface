@@ -6,12 +6,6 @@
 
 #include "Arduino.h"
 #include "Controller.h"
-#include "../LabviewDataHandler/LabviewDataHandler.h"
-#include "../ADCDataHandler/ADCDataHandler.h"
-#include "OnOff/OnOffController.h"
-#include "P/PController.h"
-#include "PI/PIController.h"
-#include "Fuzzy/FuzzyController.h"
 
 Controller::Controller(){
     previousUK = 0.0;

@@ -18,7 +18,7 @@ float PIController::pIControllerResponse(ControllerInfo *controllerInfo, float *
     b = ( controllerInfo->kp + ( controllerInfo->ki * controllerInfo->samplingPeriodInSeconds ) / 2 )    *   scalingFactor;
     c = ( ( controllerInfo->ki * controllerInfo->samplingPeriodInSeconds ) / 2 - controllerInfo->kp )    *   scalingFactor;
 
-    controlSignal = ( a * previousUK + b * currentEK + c * previousEK ) / scalingFactor;
+    controlSignal = ( a * *previousUK + b * *currentEK + c * *previousEK ) / scalingFactor;
     controlSignal = max(controlSignal,0.0);  // Lower Saturation Limit
     controlSignal = min(5.0,controlSignal);  // Upper Satutaration Limit
     return controlSignal;

@@ -6,7 +6,6 @@
 
 #include "Arduino.h"
 #include "ADCDataHandler.h"
-#include "Filters.h"
 
 ADCDataHandler::ADCDataHandler(int _UKAnalogPin, int _YKAnalogPin){
     UKAnalogPin = _UKAnalogPin;

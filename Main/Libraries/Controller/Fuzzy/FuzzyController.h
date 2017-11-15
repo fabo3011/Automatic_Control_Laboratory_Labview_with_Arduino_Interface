@@ -15,8 +15,24 @@ class  FuzzyController{
     FuzzyController();
     float fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK);
   private:
+    void  Fuzzify_and_Polyline(ControllerInfo *controllerInfo, float *currentEK);
     float controlSignal;
     // Differential in the control signal obtained by the defuzzifier
     float dU;
+    // Epsilon value defined for float type comparisions
+    float eps;
+    // Auxiliary array that stores the level of membership of the input variable
+    float mf_level[3];
+    // Auxiliary matrixes to store values of lines
+    Line inp_rect[3][3];
+    Line outp_rect[3][3];
+    // Auxiliary value to store y values present in a trapezoidal shape
+    float y_val[4] = {0, 1, 1, 0};
+    // Auxiliary structure to store x,y points of membership functions at output
+    struct Point outp_points[3][4];
+    // Auxiliary coordinates that describe the polyline
+    struct Point poly[10];
+    // Variable that stores the size of points in the polyline
+    int idx;
 };
 #endif
