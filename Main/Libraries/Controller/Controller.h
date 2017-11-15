@@ -10,6 +10,7 @@
 #include "../LabviewDataHandler/LabviewDataHandler.h"
 #include "../ADCDataHandler/ADCDataHandler.h"
 #include "OnOff/OnOffController.h"
+#include "P/PController.h"
 
 class  Controller{
   public:

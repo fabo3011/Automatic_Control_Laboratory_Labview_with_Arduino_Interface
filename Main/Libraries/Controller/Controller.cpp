@@ -9,6 +9,7 @@
 #include "../LabviewDataHandler/LabviewDataHandler.h"
 #include "../ADCDataHandler/ADCDataHandler.h"
 #include "OnOff/OnOffController.h"
+#include "P/PController.h"
 
 Controller::Controller(){
     previousUK = 0.0;
