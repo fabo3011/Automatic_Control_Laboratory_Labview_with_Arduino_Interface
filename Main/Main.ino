@@ -16,6 +16,8 @@
 #include <string.h>
 #include <math.h>
 
+#define U_SIGNAL 1
+#define Y_SIGNAL 0
 #define pwm_pin 9
 #define SAMPLE_SIGNAL 6
 
@@ -29,7 +31,7 @@ LabviewDataHandler labviewDataHandler;
 // ADC Information Structure to store data recieved by the analog to digital converters which contain uK and yK as inputs
 ADCInfo adcInfo;
 // ADC Data Handler Object to manage the information recieved through the ADC converters which contain uK and yK as inputs
-ADCDataHandler adcDataHandler = ADCDataHandler(1,0);
+ADCDataHandler adcDataHandler = ADCDataHandler(U_SIGNAL,Y_SIGNAL);
 
 // Controller
 Controller controller;
