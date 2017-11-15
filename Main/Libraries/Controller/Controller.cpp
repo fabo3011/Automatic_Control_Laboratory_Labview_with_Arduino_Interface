@@ -18,9 +18,7 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
     currentEK = controllerInfo->reference-adcInfo->yKFromADC;
     switch((int)controllerInfo->controllerType){
         case 2:     // On/Off Hyst
-          OnOffController controller;
-
-          //controllerInfo->hysteresisPercentage = Serial.parseFloat();
+          controlSignal = onOffController.onOffControllerResponse(controllerInfo, adcInfo, &currentEK);
           break;
         case 3:      // P Controller
           //controllerInfo->kp = Serial.parseFloat();
