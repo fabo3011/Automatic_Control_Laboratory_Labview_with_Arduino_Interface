@@ -37,7 +37,7 @@ int LabviewDataHandler::getIncomingFrameFromLabview(ControllerInfo *controllerIn
    *        ...(Fuzzy)...
    */
 
-    if(Serial.available() > 0){
+   if(Serial.available() > 0){
         incomingByte = Serial.read();
         // If header found
         if(incomingByte == '#'){

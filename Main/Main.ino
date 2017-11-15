@@ -1,10 +1,11 @@
-#include <Filters.h>
 #include "Libraries/LabviewDataHandler/LabviewDataHandler.h"
 #include "Libraries/LabviewDataHandler/LabviewDataHandler.cpp"
+#include "Libraries/ADCDataHandler/ADCDataHandler.h"
+#include "Libraries/ADCDataHandler/ADCDataHandler.cpp"
+
 #include <string.h>
 #include <math.h>
-#define Y_SIGNAL A0
-#define U_SIGNAL A1
+
 #define pwm_pin 9
 #define SAMPLE_SIGNAL 6
 
@@ -22,14 +23,6 @@ float dataControl;
 float temp, temp2;
 float outCentroids[3];
 
-
-// -- Filter --
-/*
- * filterFrequency:   Sets the cutOff Frequency 
- * lowPassFilter:     Filter object for Y(k) and u(k)
- */
-float filterFrequency = 5.0;
-FilterTwoPole lowPassFilter;
 
 // -- Control Signals --
 /*
@@ -335,16 +328,21 @@ ControllerInfo controllerInfo;
 // Labview Data Handler Object to manage the information recieved through the serial port by the Labview Interface
 LabviewDataHandler labviewDataHandler;
 
+// ADC Information Structure to store data recieved by the analog to digital converters which contain uK and yK as inputs
+ADCInfo adcInfo;
+// ADC Data Handler Object to manage the information recieved through the ADC converters which contain uK and yK as inputs
+ADCDataHandler adcDataHandler = ADCDataHandler(1,0);
+
 void setup() {
   
   // Initialize serial communication with custom baudrate
   labviewDataHandler.setBaudRate(921600);
+  // Set the cutoff frequency of the digital filter for yK
+  adcDataHandler.setLowPassButterworthFilterCutoffFrequency(5.0);
   
   uant = 0;
   // Set filter pin as output (PWM)
   pinMode(pwm_pin,OUTPUT); 
-  // Configure filter type for input signal
-  lowPassFilter.setAsFilter(LOWPASS_BUTTERWORTH,filterFrequency); // Filtro digital de la entrada
   // Set sample singal pin as output
   pinMode(SAMPLE_SIGNAL,OUTPUT);
   
@@ -389,62 +387,18 @@ void loop() {
     //tmpRef = (tmpRef+1.0322)/4.5583;
     ref = tmpRef;
   }*/
-  /*
-  if(Serial.available() > 0){
-    data_H =Serial.read();
-    // If header found
-    if(data_H == '#'){
-      // Read Controller type
-      dataControl = Serial.parseFloat();
-      data_H = Serial.read();
-      
-      // Read controller configs
-      switch((int)dataControl){
-        case 1:     // On/Off
-          tmpRef      = Serial.parseFloat();
-          break;
-        case 2:     // On/Off Hyst
-          tmpRef      = Serial.parseFloat();
-          data_H      = Serial.read();
-          percentage  = Serial.parseFloat();
-          break;
-        case 3:      // P Controller
-          tmpRef      = Serial.parseFloat();
-          data_H      = Serial.read();
-          kP          = Serial.parseFloat();
-          break;
-        case 4:     // PI Controller
-          tmpRef  = Serial.parseFloat();
-          data_H  = Serial.read();
-          Kp      = Serial.parseFloat();
-          data_H  = Serial.read();
-          Ki      = Serial.parseFloat();
-          break;
-        case 5:     // Fuzzy Controller
-        
-        case 6:     // Open loop
-          tmpRef =Serial.parseFloat();
-          break;
-      }
-      
-      // Convert reference to 5v logic
-      //tmpRef = dataBuff[0];
-     // tmpRef = (tmpRef+1.0322)/4.5583;
-      ref = tmpRef;
-     }
-  }
-*/
+  
 
   int frameRecieved = labviewDataHandler.getIncomingFrameFromLabview( &controllerInfo );
   if(frameRecieved){
-      labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
-    
+      //labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
     
   }
 
-  // Read convert and filter output signal
-  y_k = analogRead(Y_SIGNAL)*5.0/1024.0;
-  y_k = lowPassFilter.input(y_k);
+  adcDataHandler.readUKFromADC( &adcInfo );
+  adcDataHandler.readYKFromADC( &adcInfo );
+  adcDataHandler.filterYK( &adcInfo );
+
   
   // Execute the selected controller
   switch((int)dataControl){
@@ -483,7 +437,7 @@ void loop() {
       }else{
         analogWrite(pwm_pin,round((error/5.0)*255.0));
       }
-      u_k = analogRead(U_SIGNAL)*5.0/1024.0;
+
       break;
     case 4:       // PI Controller
       a=1*F;
@@ -495,7 +449,7 @@ void loop() {
       uact=min(uact,5.0);
       uact=max(uact,0.0);
       analogWrite(pwm_pin,round((uact/5.0)*255.0));
-      u_k = analogRead(U_SIGNAL)*5.0/1024.0;
+//      u_k = analogRead(U_SIGNAL)*5.0/1024.0;
       u_kant=uact;
       errorant=eact;
      break;
@@ -520,7 +474,7 @@ void loop() {
       break;
     case 6:
       analogWrite(pwm_pin,round((ref/5.0)*255.0));
-      u_k = analogRead(U_SIGNAL)*5.0/1024.0;
+//      u_k = analogRead(U_SIGNAL)*5.0/1024.0;
       break;
     default:
       break;

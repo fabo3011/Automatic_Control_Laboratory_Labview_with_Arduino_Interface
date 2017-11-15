@@ -8,8 +8,6 @@
 
 #include "Arduino.h"
 
-//class LabviewDataHandler;
-
 //Struct Declaration
 //Controller Information Structure to Store Data Recieved by the Labview Interface
 typedef struct ControllerInfo ControllerInfo;
@@ -23,8 +21,7 @@ struct ControllerInfo{
     float outputMFDescriptor[3][4];
 };
 
-class LabviewDataHandler
-{
+class LabviewDataHandler{
   public:
     LabviewDataHandler();
     void setBaudRate(unsigned long baud);
@@ -33,5 +30,4 @@ class LabviewDataHandler
   private:
     char incomingByte;
 };
-
 #endif
