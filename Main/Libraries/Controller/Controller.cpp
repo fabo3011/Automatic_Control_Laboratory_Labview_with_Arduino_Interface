@@ -11,6 +11,7 @@
 #include "OnOff/OnOffController.h"
 #include "P/PController.h"
 #include "PI/PIController.h"
+#include "Fuzzy/FuzzyController.h"
 
 Controller::Controller(){
     previousUK = 0.0;
@@ -31,7 +32,8 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
           controlSignal = pIController.pIControllerResponse(controllerInfo, &currentEK, &previousUK, &previousEK);
           break;
         case 5:     // Fuzzy Controller
-        
+          controlSignal = fuzzyController.fuzzyControllerResponse(controllerInfo, adcInfo, &currentEK);
+          break;
         case 6:     // Open loop
           controlSignal = controllerInfo->reference;
           break;

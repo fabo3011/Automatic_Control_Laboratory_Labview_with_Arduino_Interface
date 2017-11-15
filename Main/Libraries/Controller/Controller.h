@@ -12,6 +12,7 @@
 #include "OnOff/OnOffController.h"
 #include "P/PController.h"
 #include "PI/PIController.h"
+#include "Fuzzy/FuzzyController.h"
 
 class  Controller{
   public:
@@ -25,6 +26,6 @@ class  Controller{
     OnOffController onOffController;
     PController     pController;
     PIController    pIController;
-    //FuzzyController fuzzyController;
+    FuzzyController fuzzyController;
 };
 #endif
