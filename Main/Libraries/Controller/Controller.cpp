@@ -10,10 +10,12 @@
 #include "../ADCDataHandler/ADCDataHandler.h"
 #include "OnOff/OnOffController.h"
 #include "P/PController.h"
+#include "PI/PIController.h"
 
 Controller::Controller(){
     previousUK = 0.0;
     previousEK = 0.0;
+    pIController.setPIControllerScalingFactor(100000.0);
 }
 
 void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo){
@@ -26,9 +28,7 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
           controlSignal = pController.pControllerResponse(controllerInfo, &currentEK);
           break;
         case 4:     // PI Controller
-          //controllerInfo->kp = Serial.parseFloat();
-          //incomingByte = Serial.read();
-          //controllerInfo->ki = Serial.parseFloat();
+          controlSignal = pIController.pIControllerResponse(controllerInfo, &currentEK, &previousUK, &previousEK);
           break;
         case 5:     // Fuzzy Controller
         

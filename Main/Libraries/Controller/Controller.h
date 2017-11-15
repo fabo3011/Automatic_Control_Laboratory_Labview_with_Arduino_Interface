@@ -11,6 +11,7 @@
 #include "../ADCDataHandler/ADCDataHandler.h"
 #include "OnOff/OnOffController.h"
 #include "P/PController.h"
+#include "PI/PIController.h"
 
 class  Controller{
   public:
@@ -23,7 +24,7 @@ class  Controller{
     float previousEK;
     OnOffController onOffController;
     PController     pController;
-    //PIController    pIController;
+    PIController    pIController;
     //FuzzyController fuzzyController;
 };
 #endif
