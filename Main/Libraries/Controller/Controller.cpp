@@ -33,6 +33,7 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
         case 5:     // Fuzzy Controller
         
         case 6:     // Open loop
+          controlSignal = controllerInfo->reference;
           break;
     }
     previousEK = currentEK;
