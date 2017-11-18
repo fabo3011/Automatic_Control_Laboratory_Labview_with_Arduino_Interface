@@ -21,6 +21,8 @@ class  Controller{
     void writeControlSignalResponseToPWMPin(int pin);
     void calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
     void retrieveLinearityRegionForYKAndUK(ADCInfo *adcInfo, int m, int b, int setToMaxThreshold, bool isUKFromADCSignal ); 
+    void sendYKAndUKToLabview( ADCInfo *adcInfo, bool isUKFromADCSignal );
+    void printToSerialForArduinoDebugging( ControllerInfo *controllerInfo, ADCInfo *adcInfo, bool isUKFromADCSignal );
   private:
     float controlSignal;
     float currentEK;

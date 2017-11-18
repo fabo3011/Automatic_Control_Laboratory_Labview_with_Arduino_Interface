@@ -49,7 +49,7 @@ class  FuzzyController{
     Line inp_rect[3][3];
     Line outp_rect[3][3];
     // Auxiliary value to store y values present in a trapezoidal shape
-    float y_val[4] = {0, 1, 1, 0};
+    float y_val[4];
     // Auxiliary structure to store x,y points of membership functions at output
     struct Point outp_points[3][4];
     // Auxiliary coordinates that describe the polyline

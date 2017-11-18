@@ -20,7 +20,7 @@ void Controller::writeControlSignalResponseToPWMPin(int pin){
     analogWrite(pin,round((controlSignal/5.0)*255.0));
 }
 void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo){
-    currentEK = controllerInfo->reference-adcInfo->yKFromADC;
+    currentEK = controllerInfo->reference - adcInfo->yKFromADC;
     switch((int)controllerInfo->controllerType){
         case 2:     // On/Off Hyst
           controlSignal = onOffController.onOffControllerResponse(controllerInfo, &currentEK);
@@ -51,4 +51,41 @@ void Controller::retrieveLinearityRegionForYKAndUK(ADCInfo *adcInfo, int m, int 
     controlSignal = max( controlSignal * m + b, 0 );
     controlSignal = min( controlSignal, setToMaxThreshold );
   }
+}
+void Controller::sendYKAndUKToLabview( ADCInfo *adcInfo, bool isUKFromADCSignal ){
+  float tempY = round( max( adcInfo->yKFromADC * 100.0, 0 ) ) / 100.0;
+  float tempU;
+  if( isUKFromADCSignal ){
+    tempU = round( max( adcInfo->uKFromADC * 100.0, 0 ) ) / 100.0;
+  } else{
+    tempU = round( max( controlSignal * 100.0, 0 ) ) / 100.0;
+  }
+  // Send header
+  Serial.print('#');
+  // Send u
+  Serial.print('u');
+  if(tempU < 10) Serial.print('0');
+  Serial.print(tempU,2);
+  // Sedn y
+  Serial.print('y');
+  if(tempY < 10) Serial.print('0');
+  Serial.print(tempY,2);
+}
+void Controller::printToSerialForArduinoDebugging( ControllerInfo *controllerInfo, ADCInfo *adcInfo, bool isUKFromADCSignal ){
+  // Print Ref  
+  Serial.print( controllerInfo->reference, 2 );
+  Serial.print(',');
+  // Print Y  
+  Serial.print( adcInfo->yKFromADC, 2 );
+  Serial.print(',');
+  // Print U 
+  if( isUKFromADCSignal ){
+    Serial.print( adcInfo->uKFromADC, 2 );
+  } else{
+    Serial.print( controlSignal, 2 );
+  } 
+  Serial.print(',');
+  // Print E
+  Serial.print( currentEK, 2 );
+  Serial.println();
 }

@@ -72,36 +72,12 @@ void loop() {
 
   // Transofrm Y_k and U_k to a 0-20V range (for first order system)
   controller.retrieveLinearityRegionForYKAndUK( &adcInfo, 4.5583, -1.0322, 20.0, ADC_U_SIGNAL ); 
-  
-  float temp,temp2;
-  float y_k,u_k;
-  temp =round(max(abs(y_k)*100.0,0))/100.0;
-  Serial.print('#');
 
-  // Send u(k) to serial and pad 0
-  Serial.print('u');
-  temp2 =round(max(abs(u_k)*100.0,0))/100.0;
-  //temp2 =round(max(abs((u_k* 4.5583)-1.032),0)*100.0)/100.0;
-  if(temp2 < 10){
-    Serial.print('0');
-  }
-  Serial.print(temp2,2);
-  
-  Serial.print('y');
-  if(temp < 10){
-    Serial.print('0');
-  }
-  Serial.print(temp,2);
-  /*
-  temp =max(ref,0);
-  Serial.print(temp,2);
-  Serial.print(',');
-  temp =max(y_k,0);
-  Serial.print(temp,2);
-  Serial.print(',');
-  temp =max(u_k,0);
-  Serial.println(temp,2);
-  //Serial.println();*/
+  // Send data
+  controller.sendYKAndUKToLabview( &adcInfo, ADC_U_SIGNAL );
+
+  //Arduino Debug
+  //controller.printToSerialForArduinoDebugging( &controllerInfo, &adcInfo, ADC_U_SIGNAL );
 
   // Set t2 as time before starting program
   sync.assignTimestampInMicrosToT2();

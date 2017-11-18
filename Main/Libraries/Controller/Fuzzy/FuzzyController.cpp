@@ -9,6 +9,10 @@
 
 FuzzyController::FuzzyController(){
     eps = 1e-6;
+    y_val[0] = 0.0;
+    y_val[1] = 1.0;
+    y_val[2] = 1.0;
+    y_val[3] = 0.0;
 }
 
 // Function to Check Counter Clock Wise Turn using cross product
@@ -118,10 +122,10 @@ void  FuzzyController::Fuzzify_and_Polyline(ControllerInfo *ctrlInfo, float *cur
      for(int mf = 0; mf < 3; ++mf) {
         outp_points[mf][0].x = ctrlInfo->outputMFDescriptor[mf][0];
         outp_points[mf][3].x = ctrlInfo->outputMFDescriptor[mf][3];
-        outp_points[mf][0].y = 0;
+        outp_points[mf][0].y = y_val[0];
         outp_points[mf][1].y = mf_level[mf];
         outp_points[mf][2].y = mf_level[mf];
-        outp_points[mf][3].y = 0;
+        outp_points[mf][3].y = y_val[3];
 
         // Calculation of intersection point in mf given level of mf
         int rect = 0;
