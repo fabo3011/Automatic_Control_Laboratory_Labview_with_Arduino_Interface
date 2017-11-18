@@ -28,18 +28,18 @@ LabviewDataHandler labviewDataHandler;
 // ADC Information Structure to store data recieved by the analog to digital converters which contain uK and yK as inputs
 ADCInfo adcInfo;
 // ADC Data Handler Object to manage the information recieved through the ADC converters which contain uK and yK as inputs
-ADCDataHandler adcDataHandler = ADCDataHandler(U_SIGNAL,Y_SIGNAL);
+ADCDataHandler adcDataHandler = ADCDataHandler( U_SIGNAL, Y_SIGNAL );
 
 // Controller
 Controller controller;
 
 void setup() {
   // Initialize serial communication with custom baudrate
-  labviewDataHandler.setBaudRate(921600);
+  labviewDataHandler.setBaudRate( 921600 );
   // Set the cutoff frequency of the digital filter for yK
-  adcDataHandler.setLowPassButterworthFilterCutoffFrequency(5.0);
+  adcDataHandler.setLowPassButterworthFilterCutoffFrequency( 5.0 );
   // Set filter pin as output (PWM)
-  controller.setControlSignalResponsePWMPinAsOutput(pwm_pin);
+  controller.setControlSignalResponsePWMPinAsOutput( pwm_pin );
   // Set sample singal pin as output
   pinMode(SAMPLE_SIGNAL,OUTPUT);
 }
