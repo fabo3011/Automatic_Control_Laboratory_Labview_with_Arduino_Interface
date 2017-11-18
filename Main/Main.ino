@@ -47,30 +47,7 @@ void setup() {
   pinMode(pwm_pin,OUTPUT); 
   // Set sample singal pin as output
   pinMode(SAMPLE_SIGNAL,OUTPUT);
-  /*
-  int mf,rect;
-  for(mf = 0; mf < 3; ++mf) {
-        for(rect = 0; rect < 3; ++rect) {
-            //a
-            inp_rect[mf][rect].a = inp_mf[mf][rect+1]-inp_mf[mf][rect];
-            //b
-            inp_rect[mf][rect].b  = y_val[rect]-y_val[rect+1];
-            //c
-            inp_rect[mf][rect].c  = -inp_rect[mf][rect].a*y_val[rect]-inp_rect[mf][rect].b*inp_mf[mf][rect];
-        }
-    }
-    //printf("OUTPUT\n\n");
-    //output
-    for(mf = 0; mf < 3; ++mf) {
-        for(rect = 0; rect < 3; ++rect) {
-            //a
-            outp_rect[mf][rect].a = outp_mf[mf][rect+1]-outp_mf[mf][rect];
-            //b
-            outp_rect[mf][rect].b = y_val[rect]-y_val[rect+1];
-            //c
-            outp_rect[mf][rect].c = -outp_rect[mf][rect].a*y_val[rect]-outp_rect[mf][rect].b*outp_mf[mf][rect];
-        }
-    }*/
+ 
   
 }
 

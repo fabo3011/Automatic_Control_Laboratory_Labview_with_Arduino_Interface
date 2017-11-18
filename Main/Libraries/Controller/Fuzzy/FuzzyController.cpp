@@ -71,6 +71,32 @@ void FuzzyController::Polygon(int* poly_size, int poly0){
         poly[i] = outp_points[poly0][i];
     }
 }
+// Use mebership functions vertes coordinates to define the equations of lines for each MF in the form ay+bx+c=0
+void  FuzzyController::SetValuesForLineEquationsInMF(ControllerInfo *ctrlInfo){
+    // Input
+    for(int mf = 0; mf < 3; ++mf) {
+        for(int rect = 0; rect < 3; ++rect) {
+            // a
+            inp_rect[mf][rect].a = ctrlInfo->inputMFDescriptor[mf][rect+1] - ctrlInfo->inputMFDescriptor[mf][rect];
+            // b
+            inp_rect[mf][rect].b  = y_val[rect] - y_val[rect+1];
+            // c
+            inp_rect[mf][rect].c  = - inp_rect[mf][rect].a * y_val[rect] - inp_rect[mf][rect].b * ctrlInfo->inputMFDescriptor[mf][rect];
+        }
+    }
+    // Output
+    for(int mf = 0; mf < 3; ++mf) {
+        for(int rect = 0; rect < 3; ++rect) {
+            // a
+            outp_rect[mf][rect].a = ctrlInfo->outputMFDescriptor[mf][rect+1] - ctrlInfo->outputMFDescriptor[mf][rect];
+            // b
+            outp_rect[mf][rect].b = y_val[rect] - y_val[rect+1];
+            // c
+            outp_rect[mf][rect].c = - outp_rect[mf][rect].a * y_val[rect] - outp_rect[mf][rect].b * ctrlInfo->outputMFDescriptor[mf][rect];
+        }
+    }
+
+}
 void  FuzzyController::Fuzzify_and_Polyline(ControllerInfo *ctrlInfo, float *currentEK){
     // Fuzzification and PolyLine
     // Calculate lvl of membership by each input function using crisp variable,
@@ -170,7 +196,7 @@ float FuzzyController::CoA_Def(){
 }
 // Get Response for the Fuzzy Controller
 float FuzzyController::fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK){
-    
+    SetValuesForLineEquationsInMF(controllerInfo);
     Fuzzify_and_Polyline(controllerInfo, currentEK);
     dU = Singleton_Def();
     controlSignal = adcInfo->uKFromADC + dU;
