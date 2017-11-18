@@ -31,10 +31,10 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
         case 4:     // PI Controller
           controlSignal = pIController.pIControllerResponse(controllerInfo, &currentEK, &previousUK, &previousEK);
           break;
-        case 5:     // Fuzzy Controller
+        case 5: case 6:     // Fuzzy Controller
           controlSignal = fuzzyController.fuzzyControllerResponse(controllerInfo, adcInfo, &currentEK);
           break;
-        case 6:     // Open loop
+        case 7:     // Open loop
           controlSignal = controllerInfo->reference;
           break;
     }
