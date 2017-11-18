@@ -13,6 +13,9 @@ Controller::Controller(){
     pIController.setPIControllerScalingFactor(100000.0);
 }
 
+void Controller::writeControlSignalResponseToPWMPin(int pin){
+    analogWrite(pin,round((controlSignal/5.0)*255.0));
+}
 void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo){
     currentEK = controllerInfo->reference-adcInfo->yKFromADC;
     switch((int)controllerInfo->controllerType){
