@@ -14,7 +14,6 @@
 #include "Libraries/Controller/Fuzzy/FuzzyController.cpp"
 
 #include <string.h>
-#include <math.h>
 
 #define U_SIGNAL 1
 #define Y_SIGNAL 0
