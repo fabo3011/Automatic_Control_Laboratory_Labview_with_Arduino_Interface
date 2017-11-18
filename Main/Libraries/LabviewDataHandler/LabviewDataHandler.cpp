@@ -62,8 +62,33 @@ int LabviewDataHandler::getIncomingFrameFromLabview(ControllerInfo *controllerIn
               incomingByte = Serial.read();
               controllerInfo->ki = Serial.parseFloat();
               break;
-            case 5:     // Fuzzy Controller
-            
+            case 5:     // Fuzzy Controller Input
+              // Membership function 1
+              controllerInfo->inputMFDescriptor[0][0];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[0][1];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[0][2];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[0][3];
+              incomingByte = Serial.read();
+              // Membership function 2
+              controllerInfo->inputMFDescriptor[1][0];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[1][1];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[1][2];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[1][3];
+              incomingByte = Serial.read();
+              // Membership function 3
+              controllerInfo->inputMFDescriptor[2][0];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[2][1];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[2][2];
+              incomingByte = Serial.read();
+              controllerInfo->inputMFDescriptor[2][3];
             case 6:     // Open loop
               break;
           }
