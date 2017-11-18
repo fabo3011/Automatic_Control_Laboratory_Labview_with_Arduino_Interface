@@ -41,3 +41,14 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
     previousEK = currentEK;
     previousUK = adcInfo->uKFromADC;
 }
+void Controller::retrieveLinearityRegionForYKAndUK(ADCInfo *adcInfo, int m, int b, int setToMaxThreshold, bool isUKFromADCSignal ){
+  adcInfo->yKFromADC = max( adcInfo->yKFromADC * m + b, 0 );
+  adcInfo->yKFromADC = min( adcInfo->yKFromADC, setToMaxThreshold );
+  if( isUKFromADCSignal ){
+    adcInfo->uKFromADC = max( adcInfo->uKFromADC * m + b, 0 );
+    adcInfo->uKFromADC = min( adcInfo->uKFromADC, setToMaxThreshold );
+  } else{
+    controlSignal = max( controlSignal * m + b, 0 );
+    controlSignal = min( controlSignal, setToMaxThreshold );
+  }
+}

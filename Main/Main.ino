@@ -19,6 +19,7 @@
 #define Y_SIGNAL 0
 #define pwm_pin 9
 #define SAMPLE_SIGNAL 6
+#define ADC_U_SIGNAL true
 
 // Controller Information Structure to store data recieved by the Labview Interface
 ControllerInfo controllerInfo;
@@ -53,33 +54,25 @@ void loop() {
   // Set sample_signal as high (used to obtain period)
   sync.setSamplingSignalPinToHIGH( SAMPLE_SIGNAL );
   
-
-/*
-  if(millis()>5000){
-    
-    dataControl = 5;
-    tmpRef = 2;
-    //tmpRef = (tmpRef+1.0322)/4.5583;
-    ref = tmpRef;
-  }*/
-  
-
+  // Get data from Serial
   int frameRecieved = labviewDataHandler.getIncomingFrameFromLabview( &controllerInfo );
   if(frameRecieved){
+      // Transform reference to a 0-5V range (for first order system)
       labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
   }
 
+  // Read ADC U_k, Y_k and Filter Y_k
   adcDataHandler.readUKFromADC( &adcInfo );
   adcDataHandler.readYKFromADC( &adcInfo );
   adcDataHandler.filterYK( &adcInfo );
 
+  // Calculate U_k and write it to the PWM pin
   controller.calculateControlSignalResponse( &controllerInfo, &adcInfo );
   controller.writeControlSignalResponseToPWMPin( pwm_pin );
 
+  // Transofrm Y_k and U_k to a 0-20V range (for first order system)
+  controller.retrieveLinearityRegionForYKAndUK( &adcInfo, 4.5583, -1.0322, 20.0, ADC_U_SIGNAL ); 
   
-  //Serial.print(lowPassFilter.input(max(((u_k* 4.5583)-1.032),0)),2);
-  // Send y(k) to serial and pad 0
-  //temp =round(max(abs((y_k* 4.5583)-1.032),0)*100.0)/100.0;
   float temp,temp2;
   float y_k,u_k;
   temp =round(max(abs(y_k)*100.0,0))/100.0;

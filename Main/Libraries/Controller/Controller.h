@@ -20,6 +20,7 @@ class  Controller{
     void setControlSignalResponsePWMPinAsOutput(int pin);
     void writeControlSignalResponseToPWMPin(int pin);
     void calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
+    void retrieveLinearityRegionForYKAndUK(ADCInfo *adcInfo, int m, int b, int setToMaxThreshold, bool isUKFromADCSignal ); 
   private:
     float controlSignal;
     float currentEK;
