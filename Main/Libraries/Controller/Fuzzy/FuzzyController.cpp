@@ -109,7 +109,6 @@ void  FuzzyController::Fuzzify_and_Polyline(ControllerInfo *ctrlInfo, float *cur
             }
         }
     }
-
     // Ifs to ensure that one of the extreme membership function is set to 0
     if( mf_level[0] > mf_level[2] )
         mf_level[2] = 0.0;
@@ -141,7 +140,6 @@ void  FuzzyController::Fuzzify_and_Polyline(ControllerInfo *ctrlInfo, float *cur
             outp_points[mf][2].x = ctrlInfo->outputMFDescriptor[mf][2];
         }
      }
-
     // Construct polyline of multiple membership functions based on cases
     if( fabs( mf_level[1] ) < eps ) { // mf 1 == 0
         if( fabs( mf_level[0] ) > eps ) { // mf 0 != 0
