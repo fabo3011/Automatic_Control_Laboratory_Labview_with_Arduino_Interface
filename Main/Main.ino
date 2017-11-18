@@ -1,3 +1,5 @@
+#include "Libraries/Synchronizer/Synchronizer.h"
+#include "Libraries/Synchronizer/Synchronizer.cpp"
 #include "Libraries/LabviewDataHandler/LabviewDataHandler.h"
 #include "Libraries/LabviewDataHandler/LabviewDataHandler.cpp"
 #include "Libraries/ADCDataHandler/ADCDataHandler.h"
@@ -18,8 +20,6 @@
 #define pwm_pin 9
 #define SAMPLE_SIGNAL 6
 
-unsigned long t1,t2,T;
-
 // Controller Information Structure to store data recieved by the Labview Interface
 ControllerInfo controllerInfo;
 // Labview Data Handler Object to manage the information recieved through the serial port by the Labview Interface
@@ -33,6 +33,9 @@ ADCDataHandler adcDataHandler = ADCDataHandler( U_SIGNAL, Y_SIGNAL );
 // Controller
 Controller controller;
 
+// Synchronizer object to sync the period of the Main program to match the Controller's sampling rate
+Synchronizer sync;
+
 void setup() {
   // Initialize serial communication with custom baudrate
   labviewDataHandler.setBaudRate( 921600 );
@@ -41,14 +44,14 @@ void setup() {
   // Set filter pin as output (PWM)
   controller.setControlSignalResponsePWMPinAsOutput( pwm_pin );
   // Set sample singal pin as output
-  pinMode(SAMPLE_SIGNAL,OUTPUT);
+  sync.setSamplingSignalPinAsOutput( SAMPLE_SIGNAL );
 }
 
 void loop() {
   // Set t1 as time before starting program
-  t1=micros();
+  sync.assignTimestampInMicrosToT1();
   // Set sample_signal as high (used to obtain period)
-  digitalWrite(SAMPLE_SIGNAL,HIGH);
+  sync.setSamplingSignalPinToHIGH( SAMPLE_SIGNAL );
   
 
 /*
@@ -96,9 +99,6 @@ void loop() {
     Serial.print('0');
   }
   Serial.print(temp,2);
-  
-  
-
   /*
   temp =max(ref,0);
   Serial.print(temp,2);
@@ -109,11 +109,11 @@ void loop() {
   temp =max(u_k,0);
   Serial.println(temp,2);
   //Serial.println();*/
-  
-  t2=micros();
-  delayMicroseconds(((unsigned long)(T))*(unsigned long)(1000000)-t2+t1);
-   // delayMicroseconds(4800-t2+t1);
 
-  digitalWrite(max(SAMPLE_SIGNAL,0),LOW);
-  
+  // Set t2 as time before starting program
+  sync.assignTimestampInMicrosToT2();
+  // Implements delayMicroseconds to wait until the next sampling period
+  sync.waitUntilNextSamplingPeriod( &controllerInfo );
+  // Set sample_signal as low (used to obtain period)
+  sync.setSamplingSignalPinToLOW( SAMPLE_SIGNAL );
 }
