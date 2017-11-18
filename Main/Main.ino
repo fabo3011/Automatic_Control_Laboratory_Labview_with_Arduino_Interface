@@ -78,11 +78,8 @@ void loop() {
   adcDataHandler.filterYK( &adcInfo );
 
   controller.calculateControlSignalResponse( &controllerInfo, &adcInfo );
+  controller.writeControlSignalResponseToPWMPin( pwm_pin );
 
-
-  // Read current output signal
-  //u_k = analogRead(U_SIGNAL)*5.0/1024.0;
-  //analogWrite(pwm_pin,round((ref/5.0)*255.0));
   
   //Serial.print(lowPassFilter.input(max(((u_k* 4.5583)-1.032),0)),2);
   // Send y(k) to serial and pad 0
