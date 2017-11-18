@@ -17,8 +17,9 @@
 class  Controller{
   public:
     Controller();
-    void calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
+    void setControlSignalResponsePWMPinAsOutput(int pin);
     void writeControlSignalResponseToPWMPin(int pin);
+    void calculateControlSignalResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo);
   private:
     float controlSignal;
     float currentEK;

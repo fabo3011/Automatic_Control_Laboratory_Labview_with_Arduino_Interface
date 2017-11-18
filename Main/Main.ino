@@ -13,8 +13,6 @@
 #include "Libraries/Controller/Fuzzy/FuzzyController.h"
 #include "Libraries/Controller/Fuzzy/FuzzyController.cpp"
 
-#include <string.h>
-
 #define U_SIGNAL 1
 #define Y_SIGNAL 0
 #define pwm_pin 9
@@ -36,18 +34,14 @@ ADCDataHandler adcDataHandler = ADCDataHandler(U_SIGNAL,Y_SIGNAL);
 Controller controller;
 
 void setup() {
-  
   // Initialize serial communication with custom baudrate
   labviewDataHandler.setBaudRate(921600);
   // Set the cutoff frequency of the digital filter for yK
   adcDataHandler.setLowPassButterworthFilterCutoffFrequency(5.0);
-  
   // Set filter pin as output (PWM)
-  pinMode(pwm_pin,OUTPUT); 
+  controller.setControlSignalResponsePWMPinAsOutput(pwm_pin);
   // Set sample singal pin as output
   pinMode(SAMPLE_SIGNAL,OUTPUT);
- 
-  
 }
 
 void loop() {

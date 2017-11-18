@@ -13,6 +13,9 @@ Controller::Controller(){
     pIController.setPIControllerScalingFactor(100000.0);
 }
 
+void Controller::setControlSignalResponsePWMPinAsOutput(int pin){
+    pinMode(pin,OUTPUT); 
+}
 void Controller::writeControlSignalResponseToPWMPin(int pin){
     analogWrite(pin,round((controlSignal/5.0)*255.0));
 }
