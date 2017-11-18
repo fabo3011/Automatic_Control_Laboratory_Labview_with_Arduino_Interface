@@ -13,7 +13,6 @@
 #include "P/PController.h"
 #include "PI/PIController.h"
 #include "Fuzzy/FuzzyController.h"
-#include "math.h"
 
 class  Controller{
   public:
