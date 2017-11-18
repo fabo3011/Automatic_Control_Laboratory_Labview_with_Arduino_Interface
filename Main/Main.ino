@@ -33,7 +33,7 @@ ADCDataHandler adcDataHandler = ADCDataHandler( U_SIGNAL, Y_SIGNAL );
 // Controller
 Controller controller;
 
-// Synchronizer object to sync the period of the Main program to match the Controller's sampling rate
+// Synchronizer Object to sync the period of the Main program to match the Controller's sampling rate
 Synchronizer sync;
 
 void setup() {
