@@ -197,11 +197,11 @@ float FuzzyController::CoA_Def(){
     return centroid/area;
 }
 // Get Response for the Fuzzy Controller
-float FuzzyController::fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK){
+float FuzzyController::fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK, float *previousUK){
     SetValuesForLineEquationsInMF(controllerInfo);
     Fuzzify_and_Polyline(controllerInfo, currentEK);
     dU = Singleton_Def();
-    controlSignal = adcInfo->uKFromADC + dU;
+    controlSignal = *previousUK + dU;
     controlSignal = max(controlSignal,0.0);  // Lower Saturation Limit
     controlSignal = min(5.0,controlSignal);  // Upper Satutaration Limit
     return controlSignal;

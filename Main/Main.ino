@@ -58,7 +58,7 @@ void loop() {
   int frameRecieved = labviewDataHandler.getIncomingFrameFromLabview( &controllerInfo );
   if(frameRecieved){
       // Transform reference to a 0-5V range (for first order system)
-      labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
+      // labviewDataHandler.setReferenceLinearityRegionTo5V( &controllerInfo, 4.5583, -1.0322, 0.8 );
   }
 
   // Read ADC U_k, Y_k and Filter Y_k
@@ -71,13 +71,13 @@ void loop() {
   controller.writeControlSignalResponseToPWMPin( pwm_pin );
 
   // Transofrm Y_k and U_k to a 0-20V range (for first order system)
-  controller.retrieveLinearityRegionForYKAndUK( &adcInfo, 4.5583, -1.0322, 20.0, ADC_U_SIGNAL ); 
+  // controller.retrieveLinearityRegionForYKAndUK( &adcInfo, 4.5583, -1.0322, 20.0, ADC_U_SIGNAL ); 
 
   // Send data
-  controller.sendYKAndUKToLabview( &adcInfo, ADC_U_SIGNAL );
+   controller.sendYKAndUKToLabview( &adcInfo, ADC_U_SIGNAL );
 
   //Arduino Debug
-  //controller.printToSerialForArduinoDebugging( &controllerInfo, &adcInfo, ADC_U_SIGNAL );
+  // controller.printToSerialForArduinoDebugging( &controllerInfo, &adcInfo, ADC_U_SIGNAL );
 
   // Set t2 as time before starting program
   sync.assignTimestampInMicrosToT2();
@@ -86,3 +86,4 @@ void loop() {
   // Set sample_signal as low (used to obtain period)
   sync.setSamplingSignalPinToLOW( SAMPLE_SIGNAL );
 }
+

@@ -13,7 +13,7 @@ float OnOffController::onOffControllerResponse(ControllerInfo *controllerInfo, f
     threshold = controllerInfo->reference * (controllerInfo->hysteresisPercentage/100.0);
     if(*currentEK > threshold){              // Upper Limit Hysteresis
         return 5.0;
-    } else if (*currentEK > -threshold){     // Lower Limit Hysteresis
+    } else if (*currentEK < -threshold){     // Lower Limit Hysteresis
         return 0.0;
     }
 }

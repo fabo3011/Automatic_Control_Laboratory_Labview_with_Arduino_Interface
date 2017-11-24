@@ -25,7 +25,7 @@ struct Line{
 class  FuzzyController{
   public:
     FuzzyController();
-    float fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK);
+    float fuzzyControllerResponse(ControllerInfo *controllerInfo, ADCInfo *adcInfo, float *currentEK, float *previousUK);
   private:
     float  ccw(const struct Point* a, const struct Point* b, const struct Point* c);
     int    intersect(const struct Point* a, const struct Point* b, const struct Point* c, const struct Point* d);

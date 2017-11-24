@@ -32,14 +32,14 @@ void Controller::calculateControlSignalResponse(ControllerInfo *controllerInfo, 
           controlSignal = pIController.pIControllerResponse(controllerInfo, &currentEK, &previousUK, &previousEK);
           break;
         case 5: case 6:     // Fuzzy Controller
-          controlSignal = fuzzyController.fuzzyControllerResponse(controllerInfo, adcInfo, &currentEK);
+          controlSignal = fuzzyController.fuzzyControllerResponse(controllerInfo, adcInfo, &currentEK, &previousUK);
           break;
         case 7:     // Open loop
           controlSignal = controllerInfo->reference;
           break;
     }
     previousEK = currentEK;
-    previousUK = adcInfo->uKFromADC;
+    previousUK = controlSignal;
 }
 void Controller::retrieveLinearityRegionForYKAndUK(ADCInfo *adcInfo, int m, int b, int setToMaxThreshold, bool isUKFromADCSignal ){
   adcInfo->yKFromADC = max( adcInfo->yKFromADC * m + b, 0 );

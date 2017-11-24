@@ -64,58 +64,58 @@ int LabviewDataHandler::getIncomingFrameFromLabview(ControllerInfo *controllerIn
               break;
             case 5:     // Fuzzy Controller Input
               // Membership function 1
-              controllerInfo->inputMFDescriptor[0][0];
+              controllerInfo->inputMFDescriptor[0][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[0][1];
+              controllerInfo->inputMFDescriptor[0][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[0][2];
+              controllerInfo->inputMFDescriptor[0][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[0][3];
+              controllerInfo->inputMFDescriptor[0][3] = Serial.parseFloat();
               incomingByte = Serial.read();
               // Membership function 2
-              controllerInfo->inputMFDescriptor[1][0];
+              controllerInfo->inputMFDescriptor[1][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[1][1];
+              controllerInfo->inputMFDescriptor[1][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[1][2];
+              controllerInfo->inputMFDescriptor[1][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[1][3];
+              controllerInfo->inputMFDescriptor[1][3] = Serial.parseFloat();
               incomingByte = Serial.read();
               // Membership function 3
-              controllerInfo->inputMFDescriptor[2][0];
+              controllerInfo->inputMFDescriptor[2][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[2][1];
+              controllerInfo->inputMFDescriptor[2][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[2][2];
+              controllerInfo->inputMFDescriptor[2][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->inputMFDescriptor[2][3];
+              controllerInfo->inputMFDescriptor[2][3] = Serial.parseFloat();
             case 6:     // Fuzzy Controller Output
               // Membership function 1
-              controllerInfo->outputMFDescriptor[0][0];
+              controllerInfo->outputMFDescriptor[0][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[0][1];
+              controllerInfo->outputMFDescriptor[0][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[0][2];
+              controllerInfo->outputMFDescriptor[0][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[0][3];
+              controllerInfo->outputMFDescriptor[0][3] = Serial.parseFloat();
               incomingByte = Serial.read();
               // Membership function 2
-              controllerInfo->outputMFDescriptor[1][0];
+              controllerInfo->outputMFDescriptor[1][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[1][1];
+              controllerInfo->outputMFDescriptor[1][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[1][2];
+              controllerInfo->outputMFDescriptor[1][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[1][3];
+              controllerInfo->outputMFDescriptor[1][3] = Serial.parseFloat();
               incomingByte = Serial.read();
               // Membership function 3
-              controllerInfo->outputMFDescriptor[2][0];
+              controllerInfo->outputMFDescriptor[2][0] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[2][1];
+              controllerInfo->outputMFDescriptor[2][1] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[2][2];
+              controllerInfo->outputMFDescriptor[2][2] = Serial.parseFloat();
               incomingByte = Serial.read();
-              controllerInfo->outputMFDescriptor[2][3];
+              controllerInfo->outputMFDescriptor[2][3] = Serial.parseFloat();
               break;
             case 7:     // Open loop
               incomingByte = Serial.read();
